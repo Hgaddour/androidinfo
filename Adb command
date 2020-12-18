@@ -1,0 +1,47 @@
+@echo off
+
+echo Native information:
+for /f "delims=" %%t in ('adb shell date') do set curTime=%%t
+
+echo.
+
+for /f "delims=" %%t in ('adb shell getprop ro.product.name') do set productName=%%t
+echo 1.Model name = %productName%
+
+for /f "delims=" %%t in ('adb shell getprop ro.build.version.opporom') do set romVer=%%t
+set colorosVer=%romVer:~1,10%
+echo 2.ColorOS version = ColorOS%colorosVer%
+
+for /f "delims=" %%t in ('adb shell getprop ro.build.version.release') do set releaseVer=%%t
+echo 3.Android version = Android%releaseVer%
+
+for /f "delims=" %%t in ('adb shell getprop ro.build.version.ota') do set otaVersion=%%t
+echo 4.OTA version = %otaVersion%
+
+for /f "delims=" %%t in ('adb shell getprop sys.ota.test') do set otaSwitcher=%%t
+echo 5.OTA switch = %otaSwitcher%  (1 is on, 0 or blank is off£©
+
+for /f "delims=" %%t in ('adb shell getprop ro.oppo.regionmark') do set regionMark=%%t
+echo 6.Dot area = %regionMark%
+
+for /f "delims=" %%t in ('adb shell getprop persist.sys.oppo.region') do set userRegion=%%t
+echo 7.User selection area = %userRegion%
+
+for /f "delims=" %%t in ('adb shell getprop persist.sys.locale') do set local=%%t
+echo 8.Language = %local%
+
+for /f "delims=" %%t in ('adb shell getprop ro.oppo.operator') do set operator=%%t
+echo 9.Operator = %operator%
+
+for /f "delims=" %%t in ('adb shell dumpsys engineer --query_indicate_info ^| find /i "GUID:"') do set GUID=%%t  
+echo 10.%GUID%
+
+for /f "delims=" %%t in ('adb shell dumpsys engineer --query_indicate_info ^| find /i "IMEI1:"') do set IMEI1=%%t
+echo 11.%IMEI1%
+
+for /f "delims=" %%t in ('adb shell getprop ro.boot.flash.locked') do set locked=%%t
+echo 12.LK unlock = %locked% £¨1 is not unlocked, 0 is unlocked£©
+
+echo.
+
+pause
