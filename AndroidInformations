@@ -1,6 +1,6 @@
 @echo off
 
-echo Native information:
+echo Android information:
 for /f "delims=" %%t in ('adb shell date') do set curTime=%%t
 
 echo.
